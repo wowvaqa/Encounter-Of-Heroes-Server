@@ -16,8 +16,9 @@ public class MapManager {
 	
 	public void loadMap(){
 				
-		FileHandle file = new FileHandle("D:/s01.map");
+		//FileHandle file = new FileHandle("D:/s01.map");
 		//FileHandle file = new FileHandle("/home/eohServer/s01.map");
+		FileHandle file = new FileHandle("/home/wowvaqa/java/eohserver/s01.map");
 		
 		try {
 			mapFile = (MapFile) deserialize(file.readBytes());
