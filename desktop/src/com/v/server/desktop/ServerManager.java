@@ -13,6 +13,9 @@ import com.v.server.desktop.Network.ChangePlayerStatistic;
 import com.v.server.desktop.Network.ClientReadyToStartBattle;
 import com.v.server.desktop.Network.CountOfPlayers;
 import com.v.server.desktop.Network.DisconnonectedFromBattle;
+import com.v.server.desktop.Network.EquipAssume;
+import com.v.server.desktop.Network.EquipAssumeCancel;
+import com.v.server.desktop.Network.EquipRemove;
 import com.v.server.desktop.Network.GameTypes;
 import com.v.server.desktop.Network.InstantEffectNet;
 import com.v.server.desktop.Network.LoginSuccessAnswer;
@@ -127,7 +130,7 @@ public class ServerManager {
 				if (cCbusy.contains(disconnectedClientConnection)){
 					DisconnonectedFromBattle disconnonectedFromBattle = new DisconnonectedFromBattle();
 					server.sendToTCP(disconnectedClientConnection.enemyID, disconnonectedFromBattle);					
-					System.out.println("Usuniêcie po³¹czenia z listy cCbusy");										
+					System.out.println("Usuniï¿½cie poï¿½ï¿½czenia z listy cCbusy");										
 				}
 				cCbusy.remove(disconnectedClientConnection);
 			}
@@ -306,7 +309,7 @@ public class ServerManager {
 				 * VICTORY
 				 *****************************************************************************************/
 				if (object instanceof Network.Victory){
-					System.out.println("Odebrano zg³oszenie przgranej gracza");
+					System.out.println("Odebrano zgï¿½oszenie przgranej gracza");
 					System.out.println("Enemy ID: " + ((Victory)object).enemyID);
 					server.sendToTCP(((Victory)object).enemyID, object);
 					return;
@@ -316,7 +319,7 @@ public class ServerManager {
 				 * REQUEST FOR AMOUNT OF LOGGED PLAYERS
 				 *****************************************************************************************/
 				if (object instanceof Network.PlayersOnlineAnswer){
-					System.out.println("Otrzymano zapytanie o iloœæ zalogowanych graczy");
+					System.out.println("Otrzymano zapytanie o iloï¿½ï¿½ zalogowanych graczy");
 					PlayersOnlineAnswer playersOnlineAnswer = new PlayersOnlineAnswer();
 					playersOnlineAnswer.amountOfOnlinePlayers = cCLogged.size();
 					server.sendToTCP(clientConnection.getID(), playersOnlineAnswer);
@@ -327,7 +330,7 @@ public class ServerManager {
 				 * REQUEST FOR STATISTIC OF LOGGED PLAYER
 				 *****************************************************************************************/
 				if (object instanceof Network.PlayerStatsRequest){
-					System.out.println("Otrzymano proœbê o statystyki gracza " + 
+					System.out.println("Otrzymano proï¿½bï¿½ o statystyki gracza " + 
 							((PlayerStatsRequest) object).Login);				
 					database.statisticOfPlayer(((PlayerStatsRequest) object).Login, clientConnection);
 					return;
@@ -337,7 +340,7 @@ public class ServerManager {
 				 * REQUEST FOR CHANGE OF PLAYER STATISTIC
 				 *****************************************************************************************/
 				if (object instanceof Network.ChangePlayerStatistic){
-					System.out.println("Otrzymano proœbê o zmianê statystyk gracza " + 
+					System.out.println("Otrzymano proï¿½bï¿½ o zmianï¿½ statystyk gracza " + 
 							((ChangePlayerStatistic) object).Login);
 					System.out.println("Wygrane: " + ((ChangePlayerStatistic)object).gamesWon);
 					System.out.println("Przegrane: " + ((ChangePlayerStatistic)object).gamesLost);
@@ -372,11 +375,11 @@ public class ServerManager {
 				 *****************************************************************************************/
 				if (object instanceof Network.InstantEffectNet){
 					System.out.println("Otrzymano natychmiastowy efekt od klienta.");
-					System.out.println("Lokacja X obiektu dzia³ania efektu: " + ((InstantEffectNet)object).locationXofDefender);
-					System.out.println("Lokacja Y obiektu dzia³ania efektu: " + ((InstantEffectNet)object).locationYofDefender);
+					System.out.println("Lokacja X obiektu dziaï¿½ania efektu: " + ((InstantEffectNet)object).locationXofDefender);
+					System.out.println("Lokacja Y obiektu dziaï¿½ania efektu: " + ((InstantEffectNet)object).locationYofDefender);
 					System.out.println("Lokacja X obiektu rzucajacego czar: " + ((InstantEffectNet)object).locationXofCaster);
 					System.out.println("Lokacja Y obiektu rzucajacego czar: " + ((InstantEffectNet)object).locationYofCaster);
-					System.out.println("Obra¿enia dla obiektu atakowanego: " + ((InstantEffectNet)object).damage);
+					System.out.println("Obraï¿½enia dla obiektu atakowanego: " + ((InstantEffectNet)object).damage);
 					System.out.println("Numer efektu natychmiastowego: " + ((InstantEffectNet)object).instantEffectNumber);
 					server.sendToTCP(((InstantEffectNet)object).enemyId, object);
 				}
@@ -386,8 +389,8 @@ public class ServerManager {
 				 *****************************************************************************************/
 				if (object instanceof Network.SpellCastNet){
 					System.out.println("Otrzymano rzucenie czaru.");
-					System.out.println("Lokacja X rzucaj¹cego czar: " + ((SpellCastNet)object).locationXofCaster);
-					System.out.println("Lokacja Y rzucaj¹cego czar: " + ((SpellCastNet)object).locationYofCaster);
+					System.out.println("Lokacja X rzucajï¿½cego czar: " + ((SpellCastNet)object).locationXofCaster);
+					System.out.println("Lokacja Y rzucajï¿½cego czar: " + ((SpellCastNet)object).locationYofCaster);
 					System.out.println("Koszt czaru: " + ((SpellCastNet)object).spellManaCost);
 					System.out.println("EnemyID: " + ((SpellCastNet)object).enemyId);
 					server.sendToTCP(((SpellCastNet)object).enemyId, object);
@@ -397,9 +400,40 @@ public class ServerManager {
 				 * CLIENT READY TO START BATTLE
 				 *****************************************************************************************/
 				if (object instanceof Network.ClientReadyToStartBattle){
-					System.out.println("Otrzymano zg³oszenie od klienta o gotowoœci do rozpoczêcia potyczki.");
+					System.out.println("Otrzymano zgï¿½oszenie od klienta o gotowoï¿½ci do rozpoczï¿½cia potyczki.");
 					System.out.println("EnemyID: " + ((ClientReadyToStartBattle)object).enemyId);
 					server.sendToTCP(((ClientReadyToStartBattle)object).enemyId, object);
+				}
+				/*****************************************************************************************
+				 * EQUIP REMOVE
+				 *****************************************************************************************/
+				if (object instanceof Network.EquipRemove){
+					System.out.println("Otrzymano EquipRemove");
+					System.out.println("Enemy ID: " + ((EquipRemove)object).enemyId);
+					System.out.println("Equip Index: " + ((EquipRemove)object).equipIndex);
+					System.out.println("Loc X of plyerMob: " + ((EquipRemove)object).locationXofPlayerMob);
+					System.out.println("Loc Y of plyerMob: " + ((EquipRemove)object).locationYofPlayerMob);
+					server.sendToTCP(((EquipRemove)object).enemyId, object);
+				}
+				/*****************************************************************************************
+				 * EQUIP ASSUME CANCEL
+				 *****************************************************************************************/
+				if (object instanceof Network.EquipAssumeCancel){
+					System.out.println("Otrzymano EquipAssumeCancel");
+					System.out.println("Enemy ID: " + ((EquipAssumeCancel)object).enemyId);
+					System.out.println("Loc X of plyerMob: " + ((EquipAssumeCancel)object).locationXofPlayerMob);
+					System.out.println("Loc Y of plyerMob: " + ((EquipAssumeCancel)object).locationYofPlayerMob);
+					server.sendToTCP(((EquipAssumeCancel)object).enemyId, object);
+				}
+				/*****************************************************************************************
+				 * EQUIP ASSUME 
+				 * *****************************************************************************************/
+				if (object instanceof Network.EquipAssume){
+					System.out.println("Otrzymano EquipAssume");
+					System.out.println("Enemy ID: " + ((EquipAssume)object).enemyId);
+					System.out.println("Loc X of plyerMob: " + ((EquipAssume)object).locationXofPlayerMob);
+					System.out.println("Loc Y of plyerMob: " + ((EquipAssume)object).locationYofPlayerMob);
+					server.sendToTCP(((EquipAssume)object).enemyId, object);
 				}
 			}
 		});
