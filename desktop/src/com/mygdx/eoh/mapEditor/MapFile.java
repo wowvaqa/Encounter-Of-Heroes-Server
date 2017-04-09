@@ -56,6 +56,9 @@ public class MapFile implements Serializable{
         public boolean towerWell = false;
         public boolean towerHospital = false;
         public boolean itemGold = false;
+        public boolean manaPotion = false;
+        public boolean healthPotion = false;
+        
         public Terrains terrains;
         public int coordinateXonMap;
         public int coordinateYonMap;
