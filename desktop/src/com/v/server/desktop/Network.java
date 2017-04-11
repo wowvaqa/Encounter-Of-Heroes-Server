@@ -43,6 +43,7 @@ public class Network {
         kryo.register(EquipRemove.class);      
         kryo.register(EquipAssumeCancel.class);
         kryo.register(EquipAssume.class);
+        kryo.register(CreateEquip.class);
     }
 
     /**
@@ -193,6 +194,13 @@ public class Network {
     	public int enemyId;
     	public int locationXofPlayerMob;
     	public int locationYofPlayerMob; 
+    }
+    
+    static public class CreateEquip{
+    	public int enemyId;
+    	public int locXofPlayerMob;
+    	public int locYofPlayerMob;
+    	public int equipKind;
     }
     
     static public enum GameTypes{

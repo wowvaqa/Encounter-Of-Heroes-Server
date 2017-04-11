@@ -12,6 +12,7 @@ import com.v.server.desktop.Network.BuyPlayerMob;
 import com.v.server.desktop.Network.ChangePlayerStatistic;
 import com.v.server.desktop.Network.ClientReadyToStartBattle;
 import com.v.server.desktop.Network.CountOfPlayers;
+import com.v.server.desktop.Network.CreateEquip;
 import com.v.server.desktop.Network.DisconnonectedFromBattle;
 import com.v.server.desktop.Network.EquipAssume;
 import com.v.server.desktop.Network.EquipAssumeCancel;
@@ -434,6 +435,17 @@ public class ServerManager {
 					System.out.println("Loc X of plyerMob: " + ((EquipAssume)object).locationXofPlayerMob);
 					System.out.println("Loc Y of plyerMob: " + ((EquipAssume)object).locationYofPlayerMob);
 					server.sendToTCP(((EquipAssume)object).enemyId, object);
+				}
+				/*****************************************************************************************
+				 * EQUIP CREATE 
+				 * *****************************************************************************************/
+				if (object instanceof CreateEquip){
+					System.out.println("Otrzymano EquipCreate");
+					System.out.println("Enemy ID: " + ((Network.CreateEquip)object).enemyId);
+					System.out.println("Loc X of plyerMob: " + ((Network.CreateEquip)object).locXofPlayerMob);
+					System.out.println("Loc Y of plyerMob: " + ((Network.CreateEquip)object).locYofPlayerMob);
+					System.out.println("Equip Kind: " + ((Network.CreateEquip)object).equipKind);
+					server.sendToTCP(((Network.CreateEquip)object).enemyId, object);
 				}
 			}
 		});
