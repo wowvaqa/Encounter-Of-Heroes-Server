@@ -44,6 +44,7 @@ public class Network {
         kryo.register(EquipAssumeCancel.class);
         kryo.register(EquipAssume.class);
         kryo.register(CreateEquip.class);
+        kryo.register(ChangeAtributes.class);
     }
 
     /**
@@ -201,6 +202,27 @@ public class Network {
     	public int locXofPlayerMob;
     	public int locYofPlayerMob;
     	public int equipKind;
+    }
+    
+    static public class ChangeAtributes {
+    	public int enemyId;
+        public int playerIndex;
+        public int playerMobIndex;
+        public int attack;
+        public int actualAttack;
+        public int defence;
+        public int actualDefence;
+        public int speed;
+        public int actualSpeed;
+        public int power;
+        public int actualPower;
+        public int wisdom;
+        public int actualWisdom;
+        public int maxHp;
+        public int actualHp;
+        public int exp;
+        public int expToNextLevel;
+        public int level;
     }
     
     static public enum GameTypes{

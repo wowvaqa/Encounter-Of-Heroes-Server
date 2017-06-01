@@ -9,6 +9,7 @@ import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 import com.v.server.desktop.Network.AttackPlayerMob;
 import com.v.server.desktop.Network.BuyPlayerMob;
+import com.v.server.desktop.Network.ChangeAtributes;
 import com.v.server.desktop.Network.ChangePlayerStatistic;
 import com.v.server.desktop.Network.ClientReadyToStartBattle;
 import com.v.server.desktop.Network.CountOfPlayers;
@@ -446,6 +447,35 @@ public class ServerManager {
 					System.out.println("Loc Y of plyerMob: " + ((Network.CreateEquip)object).locYofPlayerMob);
 					System.out.println("Equip Kind: " + ((Network.CreateEquip)object).equipKind);
 					server.sendToTCP(((Network.CreateEquip)object).enemyId, object);
+				}
+				/*****************************************************************************************
+				 * CHANGE ATTRIBUTES 
+				 * *****************************************************************************************/
+				if (object instanceof ChangeAtributes){
+					System.out.println("Otrzymano Change Atributes");
+					System.out.println("Enemy ID: " + ((Network.ChangeAtributes)object).enemyId);
+					System.out.println("Player Index: " + ((Network.ChangeAtributes)object).playerIndex);
+					System.out.println("Player Mob Index: " + ((Network.ChangeAtributes)object).playerMobIndex);
+					
+					System.out.println("Attack: " + ((Network.ChangeAtributes)object).attack);
+					System.out.println("Actual Attack: " + ((Network.ChangeAtributes)object).actualAttack);
+					System.out.println("Defence: " + ((Network.ChangeAtributes)object).defence);
+					System.out.println("Actual Defence: " + ((Network.ChangeAtributes)object).actualDefence);
+					System.out.println("Speed: " + ((Network.ChangeAtributes)object).speed);
+					System.out.println("Actual Speed: " + ((Network.ChangeAtributes)object).actualSpeed);
+					System.out.println("Power: " + ((Network.ChangeAtributes)object).power);
+					System.out.println("Actual Power: " + ((Network.ChangeAtributes)object).actualPower);
+					System.out.println("Wisdom: " + ((Network.ChangeAtributes)object).wisdom);
+					System.out.println("Actual Wisdom: " + ((Network.ChangeAtributes)object).actualWisdom);
+					System.out.println("HP: " + ((Network.ChangeAtributes)object).maxHp);
+					System.out.println("Actual HP: " + ((Network.ChangeAtributes)object).actualHp);
+					
+					System.out.println("Level: " + ((Network.ChangeAtributes)object).level);
+					System.out.println("Exp: " + ((Network.ChangeAtributes)object).exp);
+					System.out.println("Exp to next Level: " + ((Network.ChangeAtributes)object).expToNextLevel);
+					
+					server.sendToTCP(((Network.ChangeAtributes)object).enemyId, object);
+					//server.sendToTCP(((Network.CreateEquip)object).enemyId, object);
 				}
 			}
 		});
